@@ -1,0 +1,580 @@
+/* frontend/src/App.css (Complete File - Final Styling) */
+
+/* --- 0. Root Variables and Imports --- */
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,300,700,500,400italic,500italic,700italic,300italic);
+
+:root {
+  /* Pastel Palette */
+  --pastel-blue: #a9d1f4;
+  --pastel-pink: #f8b4c4;
+  --pastel-green: #b8e8d5;
+  --pastel-yellow: #ffeeb4;
+  --color-primary: var(--pastel-blue);
+  --color-secondary: var(--pastel-pink);
+  --color-background-light: #f9f9f9;
+  --color-text-dark: #333333;
+  --color-card-bg: #ffffff;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --loader-bg: #eaeaea;
+
+  /* Cube Animation Variables */
+  --loader-base-size: 7em;
+  --hill-size: 9em;
+  --box-size: 1.2em;
+}
+
+/* --- 1. Global & Kiosk Container Styles --- */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* Persistent Background Gradient */
+  background-color: #e0e6f7;
+  background-image: linear-gradient(135deg, #e0e6f7 0%, #ffffff 100%);
+  overflow: hidden;
+}
+
+body {
+  font-family: "Fira Sans", sans-serif;
+  color: var(--color-text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  z-index: 10; /* Ensures content is above the background */
+}
+
+.kiosk-card {
+  background: var(--color-card-bg);
+  border-radius: 2rem;
+  box-shadow: 0 0 1rem var(--color-shadow);
+  padding: 40px;
+  max-width: 650px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  z-index: 15; /* Ensure card is above all cubes */
+}
+
+h2 {
+  color: var(--color-text-dark);
+  margin-bottom: 25px;
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+p {
+  color: var(--color-text-dark);
+  font-size: 1.05rem;
+}
+
+/* --- 2. Button Styles & Alignment --- */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+}
+button {
+  padding: 18px 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--pastel-blue);
+  color: white;
+  transition: all 0.2s ease, background-color 0.1s;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--pastel-blue) 80%, black);
+  transform: translateY(0);
+}
+button:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--pastel-blue) 90%, black);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--pastel-blue) 80%, black);
+}
+button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--pastel-blue) 80%, black);
+}
+.selected-button {
+  background-color: var(--pastel-pink) !important;
+  color: var(--color-text-dark) !important;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--pastel-pink) 90%, black);
+  border: 2px solid var(--pastel-pink);
+}
+.selected-button:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--pastel-pink) 90%,
+    black
+  ) !important;
+}
+.animated-button-wrapper {
+  margin-top: 40px;
+}
+.animated-button-wrapper button {
+  background-color: var(--pastel-green);
+  box-shadow: 0 5px 0 color-mix(in srgb, var(--pastel-green) 80%, black);
+  padding: 20px 50px;
+  font-size: 1.2rem;
+}
+.animated-button-wrapper button:hover:not(:disabled) {
+  box-shadow: 0 7px 0 color-mix(in srgb, var(--pastel-green) 80%, black);
+}
+
+/* --- 3. Wave Loader Animation (Standby Screen) --- */
+
+.animation-wrapper {
+  position: relative;
+  width: 250px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+}
+
+.circle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: var(--pastel-blue);
+  animation: move-the-circle 1s infinite;
+  transform-origin: center center;
+}
+
+/* Translated SCSS @for loop logic into raw CSS */
+.circle:nth-child(1) {
+  left: 0px;
+  animation-delay: 0.1s;
+}
+.circle:nth-child(2) {
+  left: 30px;
+  animation-delay: 0.2s;
+}
+.circle:nth-child(3) {
+  left: 60px;
+  animation-delay: 0.3s;
+}
+.circle:nth-child(4) {
+  left: 90px;
+  animation-delay: 0.4s;
+}
+.circle:nth-child(5) {
+  left: 120px;
+  animation-delay: 0.5s;
+}
+.circle:nth-child(6) {
+  left: 150px;
+  animation-delay: 0.6s;
+}
+.circle:nth-child(7) {
+  left: 180px;
+  animation-delay: 0.7s;
+}
+.circle:nth-child(8) {
+  left: 210px;
+  animation-delay: 0.8s;
+}
+
+@keyframes move-the-circle {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    background-color: var(--pastel-blue);
+  }
+  50% {
+    transform: translate(0, 50px) scale(0.4);
+    opacity: 0.5;
+    background-color: var(--pastel-pink);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    background-color: var(--pastel-blue);
+  }
+}
+
+/* --- 4. Guided Breathing Animation --- */
+.breathing-guide {
+  margin: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.breathing-circle-container {
+  width: 250px;
+  height: 250px;
+  position: relative;
+}
+.breathing-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--pastel-green) 10%,
+    var(--pastel-blue) 100%
+  );
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: breathe 8s infinite ease-in-out;
+}
+.breathing-instruction {
+  color: color-mix(in srgb, var(--pastel-green) 80%, black);
+  margin-top: 30px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  min-height: 40px;
+}
+@keyframes breathe {
+  0% {
+    transform: scale(0.5);
+  }
+  45% {
+    transform: scale(1);
+  }
+  55% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.5);
+  }
+}
+
+/* --- 5. Utility & Result Styles --- */
+.hr-note {
+  color: #888;
+  font-style: italic;
+  margin-top: 5px;
+}
+.emotion-prompt {
+  font-size: 1.2rem;
+  margin-top: 30px;
+  font-weight: 500;
+}
+.result-comparison {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.result-comparison p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+.result-value {
+  font-weight: 700;
+  color: var(--color-text-dark);
+  background-color: var(--pastel-yellow);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin: 0 5px;
+  display: inline-block;
+}
+.arrow-symbol {
+  font-weight: bold;
+  margin: 0 5px;
+  color: var(--pastel-pink);
+}
+
+/* --- 6. Animated Circles/Cubes Background CSS (30 OBJECTS) --- */
+
+.circles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.circles li {
+  position: absolute;
+  display: block;
+  list-style: none;
+  background: transparent;
+  border-radius: 15px;
+  bottom: -150px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+  backdrop-filter: blur(5px);
+  animation: animate-circles linear infinite;
+}
+
+/* Increased Density: 30 Unique Styles with Varied Speeds and Positions */
+.circles li:nth-child(1) {
+  left: 2%;
+  width: 90px;
+  height: 90px;
+  animation-delay: 0s;
+  animation-duration: 18s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(2) {
+  left: 10%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 2s;
+  animation-duration: 6s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(3) {
+  left: 70%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 4s;
+  animation-duration: 10s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(4) {
+  left: 40%;
+  width: 60px;
+  height: 60px;
+  animation-delay: 0s;
+  animation-duration: 9s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(5) {
+  left: 65%;
+  width: 40px;
+  height: 40px;
+  animation-delay: 0s;
+  animation-duration: 15s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(6) {
+  left: 75%;
+  width: 110px;
+  height: 110px;
+  animation-delay: 3s;
+  animation-duration: 7.5s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(7) {
+  left: 35%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 7s;
+  animation-duration: 20s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(8) {
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  animation-delay: 10s;
+  animation-duration: 11s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(9) {
+  left: 20%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 2s;
+  animation-duration: 18s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(10) {
+  left: 85%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 5s;
+  animation-duration: 5.5s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(11) {
+  left: 30%;
+  width: 50px;
+  height: 50px;
+  animation-delay: 0s;
+  animation-duration: 10s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(12) {
+  left: 15%;
+  width: 100px;
+  height: 100px;
+  animation-delay: 4s;
+  animation-duration: 13s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(13) {
+  left: 5%;
+  width: 60px;
+  height: 60px;
+  animation-delay: 1s;
+  animation-duration: 16s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(14) {
+  left: 90%;
+  width: 30px;
+  height: 30px;
+  animation-delay: 6s;
+  animation-duration: 8s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(15) {
+  left: 80%;
+  width: 45px;
+  height: 45px;
+  animation-delay: 8s;
+  animation-duration: 25s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(16) {
+  left: 55%;
+  width: 10px;
+  height: 10px;
+  animation-delay: 3s;
+  animation-duration: 14s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(17) {
+  left: 12%;
+  width: 70px;
+  height: 70px;
+  animation-delay: 10s;
+  animation-duration: 19s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(18) {
+  left: 48%;
+  width: 55px;
+  height: 55px;
+  animation-delay: 1s;
+  animation-duration: 11s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(19) {
+  left: 60%;
+  width: 100px;
+  height: 100px;
+  animation-delay: 5s;
+  animation-duration: 14s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(20) {
+  left: 95%;
+  width: 75px;
+  height: 75px;
+  animation-delay: 2s;
+  animation-duration: 22s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(21) {
+  left: 18%;
+  width: 40px;
+  height: 40px;
+  animation-delay: 9s;
+  animation-duration: 16s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(22) {
+  left: 8%;
+  width: 120px;
+  height: 120px;
+  animation-delay: 3s;
+  animation-duration: 8s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(23) {
+  left: 33%;
+  width: 25px;
+  height: 25px;
+  animation-delay: 6s;
+  animation-duration: 20s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(24) {
+  left: 77%;
+  width: 50px;
+  height: 50px;
+  animation-delay: 1s;
+  animation-duration: 17s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(25) {
+  left: 63%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 0s;
+  animation-duration: 10s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(26) {
+  left: 22%;
+  width: 85px;
+  height: 85px;
+  animation-delay: 4s;
+  animation-duration: 12s;
+  background: var(--pastel-blue);
+}
+.circles li:nth-child(27) {
+  left: 44%;
+  width: 35px;
+  height: 35px;
+  animation-delay: 7s;
+  animation-duration: 28s;
+  background: var(--pastel-green);
+}
+.circles li:nth-child(28) {
+  left: 88%;
+  width: 90px;
+  height: 90px;
+  animation-delay: 1s;
+  animation-duration: 14s;
+  background: var(--pastel-yellow);
+}
+.circles li:nth-child(29) {
+  left: 52%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 12s;
+  animation-duration: 8s;
+  background: var(--pastel-pink);
+}
+.circles li:nth-child(30) {
+  left: 1%;
+  width: 30px;
+  height: 30px;
+  animation-delay: 6s;
+  animation-duration: 15s;
+  background: var(--pastel-blue);
+}
+
+@keyframes animate-circles {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1) translateX(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-50vh) rotate(360deg) scale(1.1) translateX(20px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg) scale(0.5) translateX(-20px);
+    opacity: 0;
+  }
+}

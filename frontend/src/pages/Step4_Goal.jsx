@@ -59,9 +59,6 @@ const Step4_Goal = ({ sessionData, handleDataInput, nextStep }) => {
           onClick={nextStep}
           disabled={!isReadyToProceed}
         />
-        <p className="tap-hint" style={{ opacity: isReadyToProceed ? 0.6 : 0 }}>
-          Begin
-        </p>
       </div>
     </div>
   );

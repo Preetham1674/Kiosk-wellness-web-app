@@ -2,31 +2,13 @@
 import React from "react";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 
-const Step8_Results = ({ sessionData, nextStep }) => {
-  const hrBefore = sessionData.hrBefore || "N/A";
-  const hrAfter = sessionData.hrAfter || "N/A";
-
+const Step8_Results = ({ nextStep }) => {
   return (
     <div className="kiosk-card standby-card">
-      <h2>Your rhythm has its own pace and it’s welcome here.</h2>
-
-      <div className="result-comparison">
-        <p>
-          Pulse Data: <span className="result-value">{hrBefore} BPM</span>{" "}
-          <span className="arrow-symbol">&rarr;</span>{" "}
-          <span className="result-value">{hrAfter} BPM</span>
-        </p>
-
-        {/* Optional: Show selected emotions/goals if they are arrays */}
-        <p style={{ marginTop: "15px", fontSize: "1rem" }}>
-          Focus:{" "}
-          <span className="result-value">
-            {Array.isArray(sessionData.sessionType)
-              ? sessionData.sessionType.join(", ")
-              : sessionData.sessionType || "General"}
-          </span>
-        </p>
-      </div>
+      {/* Purely textual message */}
+      <h2 style={{ fontSize: "2rem", lineHeight: "1.4", margin: "40px 0" }}>
+        Your rhythm has its own pace and it’s welcome here.
+      </h2>
 
       {/* Circular Arrow Button anchored to bottom right */}
       <div className="bottom-right-anchor">
@@ -35,9 +17,6 @@ const Step8_Results = ({ sessionData, nextStep }) => {
           text="➞"
           onClick={nextStep}
         />
-        <p className="tap-hint" style={{ opacity: 0.6 }}>
-          Next
-        </p>
       </div>
     </div>
   );

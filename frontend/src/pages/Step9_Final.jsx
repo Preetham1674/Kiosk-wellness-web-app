@@ -26,9 +26,6 @@ const Step9_Final = ({ setStep }) => {
           text="➞"
           onClick={handleClose}
         />
-        <p className="tap-hint" style={{ opacity: 0.6 }}>
-          Close
-        </p>
       </div>
     </div>
   );

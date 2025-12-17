@@ -16,13 +16,15 @@ const Step0_Standby = ({ nextStep, setStartTime }) => {
       <WaveLoader />
 
       {/* Positioned container for the arrow */}
-      <div className="bottom-right-anchor">
+      <div
+        className="bottom-right-anchor"
+        style={{ bottom: "30px", right: "30px" }}
+      >
         <PrimaryButton
           className="result-arrow-btn"
           text="➞"
           onClick={handleStart}
         />
-        <p className="tap-hint">Tap to start</p>
       </div>
     </div>
   );

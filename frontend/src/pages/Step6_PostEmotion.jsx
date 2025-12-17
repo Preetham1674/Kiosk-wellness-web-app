@@ -21,9 +21,6 @@ const Step6_PostEmotion = ({ handleDataInput }) => {
           text="➞"
           onClick={handleContinue}
         />
-        <p className="tap-hint" style={{ opacity: 0.6 }}>
-          Next
-        </p>
       </div>
     </div>
   );

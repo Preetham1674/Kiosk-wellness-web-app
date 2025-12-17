@@ -1,12 +1,16 @@
 // frontend/src/components/PrimaryButton.jsx
 import React from "react";
 
-const PrimaryButton = ({ text, onClick, disabled = false }) => (
-  <div className="animated-button-wrapper">
-    <button onClick={onClick} disabled={disabled}>
+const PrimaryButton = ({ text, onClick, className, disabled }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={className} // THIS MUST BE HERE
+      disabled={disabled}
+    >
       {text}
     </button>
-  </div>
-);
+  );
+};
 
 export default PrimaryButton;

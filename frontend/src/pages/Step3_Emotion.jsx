@@ -61,9 +61,6 @@ const Step3_Emotion = ({ sessionData, handleDataInput, nextStep }) => {
           onClick={nextStep}
           disabled={!isReadyToProceed}
         />
-        <p className="tap-hint" style={{ opacity: isReadyToProceed ? 0.6 : 0 }}>
-          Next
-        </p>
       </div>
     </div>
   );

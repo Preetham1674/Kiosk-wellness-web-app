@@ -7,14 +7,21 @@ const Step1_Welcome = ({ nextStep }) => {
     <div className="kiosk-card standby-card">
       <h2>Settle in, nothing else matters right now.</h2>
 
-      {/* Positioned container for the arrow */}
-      <div className="bottom-right-anchor">
+      {/* Centered content to fill the card space */}
+      <div style={{ marginTop: "30px", opacity: 0.8 }}>
+        <p>Take a deep breath and prepare to find your rhythm.</p>
+      </div>
+
+      {/* Circular Arrow Button anchored to bottom right */}
+      <div
+        className="bottom-right-anchor"
+        style={{ bottom: "30px", right: "30px" }}
+      >
         <PrimaryButton
           className="result-arrow-btn"
           text="➞"
           onClick={nextStep}
         />
-        <p className="tap-hint">Next</p>
       </div>
     </div>
   );

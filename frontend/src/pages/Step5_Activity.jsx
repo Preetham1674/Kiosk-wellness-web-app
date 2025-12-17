@@ -4,20 +4,17 @@ import PrimaryButton from "../components/PrimaryButton.jsx";
 
 const Step5_Activity = ({ sessionData, nextStep }) => {
   const [showActivity, setShowActivity] = useState(false);
-  const [btnDisabled, setBtnDisabled] = useState(true); // NEW: Track button lockout
+  const [btnDisabled, setBtnDisabled] = useState(true);
   const videoRef = useRef(null);
 
   useEffect(() => {
-    // 1. Initial 5-second delay to show the "Preparing" message
     const preparationTimer = setTimeout(() => {
       setShowActivity(true);
 
-      // 2. Start the 7-second lockout timer once the activity reveals
       const lockoutTimer = setTimeout(() => {
         setBtnDisabled(false);
-      }, 7000); // 7 seconds
+      }, 7000);
 
-      // 3. Trigger video playback
       setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.play().catch((error) => {
@@ -27,7 +24,7 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
       }, 100);
 
       return () => clearTimeout(lockoutTimer);
-    }, 5000); // 5-second initial delay
+    }, 5000);
 
     return () => clearTimeout(preparationTimer);
   }, []);
@@ -39,7 +36,6 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
     nextStep();
   };
 
-  // --- Display Pre-Activity Message ---
   if (!showActivity) {
     return (
       <div className="kiosk-card standby-card">
@@ -68,7 +64,6 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
     );
   }
 
-  // --- Display Main Activity ---
   return (
     <div
       className="kiosk-card activity-media-card standby-card"
@@ -95,11 +90,10 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
           controlsList="nodownload noremoteplayback"
           disablePictureInPicture
           style={{ width: "100%", height: "auto", borderRadius: "10px" }}
-          onEnded={nextStep}
+          /* REMOVED: onEnded={nextStep} */
         />
       </div>
 
-      {/* Circular Arrow Button with 7-second lockout logic */}
       <div
         className="bottom-right-anchor"
         style={{ bottom: "25px", right: "30px" }}
@@ -108,11 +102,12 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
           className="result-arrow-btn"
           text="➞"
           onClick={handleSkip}
-          disabled={btnDisabled} // Button is disabled for the first 7s
+          disabled={btnDisabled}
         />
-        <p className="tap-hint" style={{ opacity: btnDisabled ? 0.3 : 0.6 }}>
-          {btnDisabled ? "Wait..." : "Finish"}
-        </p>
+        <p
+          className="tap-hint"
+          style={{ opacity: btnDisabled ? 0.3 : 0.6 }}
+        ></p>
       </div>
     </div>
   );

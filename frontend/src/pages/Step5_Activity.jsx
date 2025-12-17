@@ -3,20 +3,21 @@ import React, { useState, useEffect, useRef } from "react";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 
 const Step5_Activity = ({ sessionData, nextStep }) => {
-  // Controls when the actual activity (video) starts
   const [showActivity, setShowActivity] = useState(false);
-
-  // Ref to control the video element
+  const [btnDisabled, setBtnDisabled] = useState(true); // NEW: Track button lockout
   const videoRef = useRef(null);
 
-  // EFFECT to handle the 5-second delay after the page loads
   useEffect(() => {
-    // Start the timer when the component mounts
-    const timer = setTimeout(() => {
+    // 1. Initial 5-second delay to show the "Preparing" message
+    const preparationTimer = setTimeout(() => {
       setShowActivity(true);
 
-      // Trigger video playback
-      // Note: Timeout gives React a moment to render the video element before we call .play()
+      // 2. Start the 7-second lockout timer once the activity reveals
+      const lockoutTimer = setTimeout(() => {
+        setBtnDisabled(false);
+      }, 7000); // 7 seconds
+
+      // 3. Trigger video playback
       setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.play().catch((error) => {
@@ -24,13 +25,13 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
           });
         }
       }, 100);
-    }, 5000); // 5000 milliseconds = 5 seconds
 
-    // Cleanup function
-    return () => clearTimeout(timer);
+      return () => clearTimeout(lockoutTimer);
+    }, 5000); // 5-second initial delay
+
+    return () => clearTimeout(preparationTimer);
   }, []);
 
-  // Handler to skip the video and advance to the next step
   const handleSkip = () => {
     if (videoRef.current) {
       videoRef.current.pause();
@@ -38,10 +39,10 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
     nextStep();
   };
 
-  // --- Display Pre-Activity Message (Shown for 5 seconds) ---
+  // --- Display Pre-Activity Message ---
   if (!showActivity) {
     return (
-      <div className="kiosk-card">
+      <div className="kiosk-card standby-card">
         <div
           style={{
             height: "400px",
@@ -56,17 +57,30 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
             Gently move in that direction
           </h2>
           <p style={{ color: "var(--pastel-blue)", fontStyle: "italic" }}>
-            Preparing your {sessionData.sessionType} session...
+            Preparing your{" "}
+            {Array.isArray(sessionData.sessionType)
+              ? sessionData.sessionType.join(" & ")
+              : sessionData.sessionType}{" "}
+            session...
           </p>
         </div>
       </div>
     );
   }
 
-  // --- Display Main Activity (After 5s delay) ---
+  // --- Display Main Activity ---
   return (
-    <div className="kiosk-card activity-media-card">
-      <h2>Guided {sessionData.sessionType} Session</h2>
+    <div
+      className="kiosk-card activity-media-card standby-card"
+      style={{ paddingBottom: "130px" }}
+    >
+      <h2>
+        Guided{" "}
+        {Array.isArray(sessionData.sessionType)
+          ? sessionData.sessionType.join(" & ")
+          : sessionData.sessionType}{" "}
+        Session
+      </h2>
 
       <div
         className="activity-media-container"
@@ -81,14 +95,25 @@ const Step5_Activity = ({ sessionData, nextStep }) => {
           controlsList="nodownload noremoteplayback"
           disablePictureInPicture
           style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+          onEnded={nextStep}
         />
       </div>
 
-      <PrimaryButton
-        text="Finish Activity Early"
-        onClick={handleSkip}
-        disabled={false}
-      />
+      {/* Circular Arrow Button with 7-second lockout logic */}
+      <div
+        className="bottom-right-anchor"
+        style={{ bottom: "25px", right: "30px" }}
+      >
+        <PrimaryButton
+          className="result-arrow-btn"
+          text="➞"
+          onClick={handleSkip}
+          disabled={btnDisabled} // Button is disabled for the first 7s
+        />
+        <p className="tap-hint" style={{ opacity: btnDisabled ? 0.3 : 0.6 }}>
+          {btnDisabled ? "Wait..." : "Finish"}
+        </p>
+      </div>
     </div>
   );
 };

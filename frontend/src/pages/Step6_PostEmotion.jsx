@@ -1,30 +1,32 @@
 // frontend/src/pages/Step5_PostEmotion.jsx
 import React from "react";
-// Import PrimaryButton to use the standard action button style
 import PrimaryButton from "../components/PrimaryButton.jsx";
 
-const Step5_PostEmotion = ({ handleDataInput }) => {
+const Step6_PostEmotion = ({ handleDataInput }) => {
   const handleContinue = () => {
-    // If the user clicks continue without selecting a feeling,
-    // we save a default value, like 'Continued' or 'Not measured',
-    // and then advance to the next step (Step 6/7: Final HR Check).
+    // Save a default value and advance to the final heart rate check
     handleDataInput("emotionAfter", "Not specified");
   };
 
   return (
-    <div className="kiosk-card">
+    <div className="kiosk-card standby-card">
       <h2>Stay with what unfolds</h2>
 
-      {/* Removed the <br /> tag and the original <div className="button-group"> */}
+      <div style={{ marginTop: "40px", textAlign: "center" }}></div>
 
-      <p style={{ marginTop: "20px" }}>Your guided moment is complete.</p>
-
-      <PrimaryButton
-        text="Continue"
-        onClick={handleContinue} // Saves default data and advances
-      />
+      {/* Circular Arrow Button anchored to bottom right */}
+      <div className="bottom-right-anchor">
+        <PrimaryButton
+          className="result-arrow-btn"
+          text="➞"
+          onClick={handleContinue}
+        />
+        <p className="tap-hint" style={{ opacity: 0.6 }}>
+          Next
+        </p>
+      </div>
     </div>
   );
 };
 
-export default Step5_PostEmotion;
+export default Step6_PostEmotion;

@@ -4,10 +4,18 @@ import PrimaryButton from "../components/PrimaryButton.jsx";
 
 const Step1_Welcome = ({ nextStep }) => {
   return (
-    <div className="kiosk-card">
-      <h2>"Settle in, nothing else matters right now."</h2>
-      <p>Ready to validate your experience and test your impact?</p>
-      <PrimaryButton text="Let's follow your own rhythm" onClick={nextStep} />
+    <div className="kiosk-card standby-card">
+      <h2>Settle in, nothing else matters right now.</h2>
+
+      {/* Positioned container for the arrow */}
+      <div className="bottom-right-anchor">
+        <PrimaryButton
+          className="result-arrow-btn"
+          text="➞"
+          onClick={nextStep}
+        />
+        <p className="tap-hint">Next</p>
+      </div>
     </div>
   );
 };

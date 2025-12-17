@@ -4,7 +4,6 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,300,700,500,400italic,500italic,700italic,300italic);
 
 :root {
-  /* Pastel Palette */
   --pastel-blue: #a9d1f4;
   --pastel-pink: #f8b4c4;
   --pastel-green: #b8e8d5;
@@ -14,12 +13,10 @@
   --color-background-light: #f9f9f9;
   --color-text-dark: #333333;
 
-  /* Glass-morphism Card Variables */
   --color-card-bg-translucent: rgba(255, 255, 255, 0.8);
   --color-shadow: rgba(0, 0, 0, 0.15);
   --color-card-border: rgba(255, 255, 255, 0.4);
 
-  /* SVG Scanner Colors */
   --svg-stroke-color: var(--pastel-blue);
   --svg-background-color: var(--color-text-dark);
   --svg-shadow-color: rgba(169, 209, 244, 0.5);
@@ -82,18 +79,6 @@ body {
   z-index: 15;
 }
 
-.activity-media-card {
-  max-width: 800px !important;
-  min-width: 800px !important;
-}
-
-h2 {
-  color: var(--color-text-dark);
-  margin-bottom: 25px;
-  font-size: 2.2rem;
-  font-weight: 500;
-}
-
 /* --- 2. Button Styles --- */
 .button-group {
   display: grid;
@@ -102,7 +87,6 @@ h2 {
   margin-top: 30px;
 }
 
-/* Base button style */
 button {
   padding: 18px 25px;
   font-size: 1.1rem;
@@ -126,12 +110,12 @@ button:active:not(:disabled) {
   box-shadow: 0 2px 0 #88b8e0;
 }
 
-/* RESTORED: Selected state for Emotion/Goal options */
+/* Selected state for Emotion/Goal options */
 button.selected-button {
   background-color: var(--pastel-pink) !important;
   color: var(--color-text-dark) !important;
   transform: translateY(2px);
-  box-shadow: 0 2px 0 #d499a7 !important; /* Darker pink shadow */
+  box-shadow: 0 2px 0 #d499a7 !important;
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -145,16 +129,12 @@ button:disabled {
   margin-top: 40px;
 }
 
-/* Green Continue Buttons */
+/* Standard Green Buttons */
 .animated-button-wrapper button:not(.result-arrow-btn) {
   background-color: var(--pastel-green);
   box-shadow: 0 5px 0 #92c9b4;
   padding: 20px 50px;
   border-radius: 12px;
-}
-
-.animated-button-wrapper button:not(.result-arrow-btn):hover:not(:disabled) {
-  box-shadow: 0 7px 0 #92c9b4;
 }
 
 /* Circular Arrow Buttons (Results & Final Page) */
@@ -172,7 +152,36 @@ button.result-arrow-btn {
   box-shadow: 0 6px 0 #92c9b4;
 }
 
-/* --- 3. Standby Page Wave Animation (The 8 dots) --- */
+/* --- 3. Standby Page Specific Styles --- */
+.standby-card {
+  position: relative;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Anchor the arrow button to bottom right */
+.bottom-right-anchor {
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tap-hint {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Standby Page Wave animation logic */
 .animation-wrapper {
   position: relative;
   width: 250px;
@@ -238,7 +247,7 @@ button.result-arrow-btn {
   }
 }
 
-/* --- 4. Fingerprint Scanner Animation --- */
+/* --- 4. Fingerprint Scanner & Loader Logic --- */
 .container {
   align-items: center;
   background: var(--svg-background-color);
@@ -256,7 +265,6 @@ button.result-arrow-btn {
 .container.active {
   animation: pulse-glow 4s infinite;
 }
-
 .fingerprint {
   position: absolute;
   stroke: var(--svg-stroke-color);
@@ -272,27 +280,69 @@ button.result-arrow-btn {
   transition: 2s 1.3s;
 }
 
-/* The Success Checkmark */
+/* The Success Tick */
 .ok {
   opacity: 0;
   position: absolute;
-  transition: opacity 300ms 4.1s;
+  z-index: 50;
+  transition: opacity 500ms ease-in-out;
+  pointer-events: none;
 }
+
 .active.container .ok {
-  opacity: 1;
+  opacity: 1 !important;
+}
+.active .fingerprint-active {
+  opacity: 0.6;
+}
+
+/* The Spinner Ring */
+.scan-loader {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 4px solid transparent;
+  border-top-color: var(--pastel-pink);
+  border-radius: 50%;
+  z-index: 10;
+  animation: spin 1s linear infinite;
+}
+
+.scanning::before {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
     transform: scale(1);
+    box-shadow: 0 0 5px var(--svg-shadow-color);
   }
   50% {
     transform: scale(1.05);
+    box-shadow: 0 0 20px var(--svg-shadow-color);
   }
 }
 
-/* --- 5. Comparison & Results Box --- */
+.container:not(.active) .fingerprint-active {
+  display: none;
+}
+
+/* --- 5. Result UI & BPM Display --- */
 .result-comparison {
   margin: 25px auto;
   padding: 20px;
@@ -307,16 +357,50 @@ button.result-arrow-btn {
   font-weight: 500;
   font-size: 1.1rem;
 }
-
 .result-value {
   font-weight: 700;
   background: var(--pastel-yellow);
   padding: 3px 8px;
   border-radius: 4px;
 }
-
 .arrow-symbol {
   font-weight: bold;
   color: var(--pastel-pink);
   margin: 0 10px;
+}
+
+.bpm-display {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+}
+
+.bpm-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--pastel-pink);
+  text-shadow: 0 2px 10px rgba(248, 180, 196, 0.3);
+}
+
+.bpm-unit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  opacity: 0.7;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

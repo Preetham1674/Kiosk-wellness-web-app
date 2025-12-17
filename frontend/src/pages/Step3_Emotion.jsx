@@ -15,22 +15,34 @@ const emotionOptions = [
 ];
 
 const Step3_Emotion = ({ sessionData, handleDataInput, nextStep }) => {
-  // Checks if an emotion has been selected (hrBefore is placeholder, should be emotionBefore)
-  const isReadyToProceed = sessionData.emotionBefore;
+  const selectedEmotions = sessionData.emotionBefore || [];
+
+  const toggleEmotion = (emotion) => {
+    let newSelection;
+    if (selectedEmotions.includes(emotion)) {
+      newSelection = selectedEmotions.filter((item) => item !== emotion);
+    } else {
+      newSelection = [...selectedEmotions, emotion];
+    }
+    handleDataInput("emotionBefore", newSelection, false);
+  };
+
+  const isReadyToProceed = selectedEmotions.length > 0;
 
   return (
-    <div className="kiosk-card">
+    <div
+      className="kiosk-card standby-card"
+      style={{ paddingBottom: "120px" }} // Added padding to push the card height so button doesn't overlap
+    >
       <h2>What brings you here today?</h2>
 
-      <p className="emotion-prompt">I currently feel...</p>
       <div className="button-group">
         {emotionOptions.map((emotion) => (
           <button
             key={emotion}
-            // FIXED: Set next=false to prevent automatic advance
-            onClick={() => handleDataInput("emotionBefore", emotion, false)}
+            onClick={() => toggleEmotion(emotion)}
             className={
-              sessionData.emotionBefore === emotion ? "selected-button" : ""
+              selectedEmotions.includes(emotion) ? "selected-button" : ""
             }
           >
             {emotion}
@@ -38,12 +50,21 @@ const Step3_Emotion = ({ sessionData, handleDataInput, nextStep }) => {
         ))}
       </div>
 
-      {/* Primary button is now the required validator and advances to Step 4 */}
-      <PrimaryButton
-        text="Continue to Goals"
-        onClick={nextStep} // Advances to the next screen (Step 4: Goal)
-        disabled={!isReadyToProceed} // Disabled until an option is chosen
-      />
+      {/* NEW: Circular Arrow Button anchored to bottom right with fine-tuned positioning */}
+      <div
+        className="bottom-right-anchor"
+        style={{ bottom: "20px", right: "25px" }}
+      >
+        <PrimaryButton
+          className="result-arrow-btn"
+          text="➞"
+          onClick={nextStep}
+          disabled={!isReadyToProceed}
+        />
+        <p className="tap-hint" style={{ opacity: isReadyToProceed ? 0.6 : 0 }}>
+          Next
+        </p>
+      </div>
     </div>
   );
 };

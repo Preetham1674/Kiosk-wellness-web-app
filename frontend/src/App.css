@@ -1,0 +1,253 @@
+/* frontend/src/App.css */
+
+/* --- 0. Root Variables and Imports --- */
+/* Import Nunito font instead of Fira Sans */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+:root {
+  --pastel-blue: #a9d1f4;
+  --pastel-pink: #f8b4c4;
+  --pastel-green: #b8e8d5;
+  --pastel-yellow: #ffeeb4;
+  --color-primary: var(--pastel-blue);
+  --color-secondary: var(--pastel-pink);
+  --color-background-light: #f9f9f9;
+  --color-text-dark: #333333;
+
+  --color-card-bg-translucent: rgba(255, 255, 255, 0.9);
+  --color-shadow: rgba(0, 0, 0, 0.2);
+  --color-card-border: rgba(255, 255, 255, 0.6);
+
+  --svg-stroke-color: var(--pastel-blue);
+  --svg-background-color: var(--color-text-dark);
+  --svg-shadow-color: rgba(169, 209, 244, 0.5);
+}
+
+/* --- 1. Global & Layout --- */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background-light);
+  overflow: hidden;
+  /* Apply Nunito globally */
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  background-color: #567d5a;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  padding-top: 5vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* LOGO STYLING */
+.logo-container {
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.kiosk-logo {
+  width: 250px;
+  height: 250px;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  object-fit: contain;
+  display: block;
+}
+
+/* FIXED KIOSK CARD */
+.kiosk-card {
+  background: var(--color-card-bg-translucent);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--color-card-border);
+  border-radius: 2.5rem;
+  box-shadow: 0 10px 30px var(--color-shadow);
+  padding: 50px;
+
+  width: 850px;
+  height: 650px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 15;
+  box-sizing: border-box;
+}
+
+/* --- 2. Button Styles --- */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+button {
+  /* Update font to Nunito */
+  font-family: "Nunito", sans-serif;
+  padding: 18px 25px;
+  font-size: 1.1rem;
+  font-weight: 700; /* Nunito looks better slightly bolder */
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--pastel-blue);
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0 #88b8e0;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #88b8e0;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #88b8e0;
+}
+
+button:disabled {
+  background-color: #cccccc !important;
+  box-shadow: 0 4px 0 #999999 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  opacity: 0.7;
+}
+
+button.selected-button {
+  background-color: var(--pastel-pink) !important;
+  color: var(--color-text-dark) !important;
+  box-shadow: 0 2px 0 #d499a7 !important;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transform: translateY(2px);
+}
+
+button.result-arrow-btn {
+  font-size: 2.5rem !important;
+  width: 90px !important;
+  height: 90px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--pastel-green);
+  box-shadow: 0 6px 0 #92c9b4;
+}
+
+/* --- 3. Positioning & Anchors --- */
+.bottom-right-anchor {
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tap-hint {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- 4. Animations --- */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  width: 120px;
+  background: var(--svg-background-color);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--svg-shadow-color);
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.pulse-heart {
+  animation: heartBeat 0.8s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(0.95);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  45% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+.ekg-wave {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.ekg-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 2.5s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* --- 5. Result Display --- */
+.bpm-number {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--pastel-pink);
+  margin-bottom: 10px;
+}
